@@ -928,7 +928,9 @@ std::unique_ptr<MachO::Binary> DyldSharedCache::extract(
     const image_t& image, const dsc::Dylib::extract_opt_t& opt) const
 {
   if (opt.fix_branches || opt.fix_memory || opt.fix_relocations ||
-      opt.fix_objc || opt.create_dyld_chained_fixup_cmd)
+      opt.fix_objc ||
+      (opt.create_dyld_chained_fixup_cmd &&
+       *opt.create_dyld_chained_fixup_cmd))
   {
     LIEF_WARN("Enhanced dyld shared cache de-optimization is not implemented; "
               "performing raw extraction");
